@@ -26,7 +26,9 @@ files <- as.list(files[grepl("xls", tolower(files))])
 # read data
 dat_list <- lapply(files, 
                    function(file) readxl::read_excel(paste0(path_rawData, file), 
-                                                     sheet = 1, na = ".")) 
+                                                     sheet = 1, na = "."))
+# select only AOIs with PM or LM (Experiment 1)
+dat_list[[1]] <- dat_list[[1]][grepl("LM|PM", dat_list[[1]]$AOI_LABEL), ]
 #------------------------------
 
 #------------------------------ DIMENSIONS
