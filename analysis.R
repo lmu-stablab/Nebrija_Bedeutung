@@ -51,20 +51,20 @@ AOIcond_list <- list(
 )
 
 AOIcond_list_table_3 <- list(
-  "Model1" = c("N_LM_1", "N_PM_1", "E_LM_1", "E_PM_1", "H_LM_1", "H_PM_1",
-               "N_LM_2", "N_PM_2", "E_LM_2", "E_PM_2", "H_LM_2","H_PM_2",
-               "N_LM_3", "N_PM_3", "E_LM_3", "E_PM_3", "H_LM_3", "H_PM_3")
+  "Model1" = c("N_LM_2", "N_PM_2", "E_LM_2", "E_PM_2", "H_LM_2", "H_PM_2",
+               "N_LM_3", "N_PM_3", "E_LM_3", "E_PM_3", "H_LM_3", "H_PM_3",
+               "N_LM_4", "N_PM_4", "E_LM_4", "E_PM_4", "H_LM_4", "H_PM_4")
 )
 
-labels_customized <- c("N_LM_1" = "L1, lex, full", "N_PM_1" = "L1, pron, full",
-                      "E_LM_1" = "L2, lex, full", "E_PM_1" = "L2, pron, full",
-                      "H_LM_1" = "LH, lex, full", "H_PM_1" = "LH, pron, full",
-                      "N_LM_2" = "L1, lex, relat", "N_PM_2" = "L1, pron, relat",
-                      "E_LM_2" = "L2, lex, relat", "E_PM_2" = "L2, pron, relat",
-                      "H_LM_2" = "LH, lex, relat", "H_PM_2" = "LH, pron, relat",
-                      "N_LM_3" = "L1, lex, refer", "N_PM_3" = "L1, pron, refer",
-                      "E_LM_3" = "L2, lex, refer", "E_PM_3" = "L2, pron, refer",
-                      "H_LM_3" = "LH, lex, refer", "H_PM_3" = "LH, pron, refer")
+labels_customized <- c("N_LM_2" = "L1, lex, relat", "N_PM_2" = "L1, pron, relat",
+                       "E_LM_2" = "L2, lex, relat", "E_PM_2" = "L2, pron, relat",
+                       "H_LM_2" = "LH, lex, relat", "H_PM_2" = "LH, pron, relat",
+                       "N_LM_3" = "L1, lex, refer", "N_PM_3" = "L1, pron, refer",
+                       "E_LM_3" = "L2, lex, refer", "E_PM_3" = "L2, pron, refer",
+                       "H_LM_3" = "LH, lex, refer", "H_PM_3" = "LH, pron, refer",
+                       "N_LM_4" = "L1, lex, context", "N_PM_4" = "L1, pron, context",
+                       "E_LM_4" = "L2, lex, context", "E_PM_4" = "L2, pron, context",
+                       "H_LM_4" = "LH, lex, context", "H_PM_4" = "LH, pron, context")
 
 
 AOIcond_vec <- sort(unique(unlist(AOIcond_list)))
@@ -150,7 +150,7 @@ dat_pred_plot <- res_mod1_TRT %>%
     aoi = as.numeric(str_extract(X, "\\d+$"))
   )
 
-vec_titles <- c("Full sentence", "Relational expression", "Referential expression")
+vec_titles <- c("Relational expression", "Referential expression", "Context")
 plot_by_item <- function(AOI) {
   p <- ggplot(dat_pred_plot %>% filter(aoi == AOI), aes(x = condition, y = TRT.Pred, color = speaker)) +
     geom_point(position = position_dodge(width = 0.15), size = 3) +
@@ -167,9 +167,9 @@ plot_by_item <- function(AOI) {
          width = 5, height = 3)
 }
 
-plot_by_item(AOI = 1)
 plot_by_item(AOI = 2)
 plot_by_item(AOI = 3)
+plot_by_item(AOI = 4)
 
 #------------------------------
 
@@ -225,19 +225,6 @@ mod2_res <- function(AOI, resp) {
          as.data.frame(emm_contrast), envir = .GlobalEnv)
 }
 
-# AOI 1
-mod2_res(1, "TRT")
-summary(mod2_TRT_1)
-kable(contrast_mod2_TRT_1)
-
-mod2_res(1, "FRT")
-summary(mod2_FRT_1)
-kable(contrast_mod2_FRT_1)
-
-mod2_res(1, "RRT")
-summary(mod2_RRT_1)
-kable(contrast_mod2_RRT_1)
-
 # AOI 2
 mod2_res(2, "TRT")
 summary(mod2_TRT_2)
@@ -264,6 +251,19 @@ mod2_res(3, "RRT")
 summary(mod2_RRT_3)
 kable(contrast_mod2_RRT_3)
 
+# AOI 4
+mod2_res(4, "TRT")
+summary(mod2_TRT_4)
+kable(contrast_mod2_TRT_4)
+
+mod2_res(4, "FRT")
+summary(mod2_FRT_4)
+kable(contrast_mod2_FRT_4)
+
+mod2_res(4, "RRT")
+summary(mod2_RRT_4)
+kable(contrast_mod2_RRT_4)
+
 #------------------------------
 
 #------------------------------ VISUALIZATIONS
@@ -287,8 +287,8 @@ mod2_effect_plot <- function(AOI, resp) {
          width = 5, height = 3)
 }
 
-mod2_effect_plot(1, "TRT")
 mod2_effect_plot(2, "TRT")
 mod2_effect_plot(3, "TRT")
+mod2_effect_plot(4, "TRT")
 
 #------------------------------
